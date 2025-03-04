@@ -146,6 +146,7 @@ install.packages("D:/AnnotationDbi_1.68.0.tar.gz", repos = NULL, type = "source"
 BiocManager::install("org.Hs.eg.db")
 
 force = TRUE
+n
 
 install.packages("AnnotationDbi")
 # 加载人类注释数据库
@@ -159,9 +160,13 @@ library(clusterProfiler)
 go_enrich <- enrichGO(gene = sig_genes, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "BP")
 dotplot(go_enrich)
 
-# KEGG 富集分析
-kegg_enrich <- enrichKEGG(gene = sig_genes, organism = "hsa", keyType = "kegg")
-dotplot(kegg_enrich)
+go_enrich <- enrichGO(gene = sig_genes, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "CC")
+dotplot(go_enrich)
+
+go_enrich <- enrichGO(gene = sig_genes, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "MF")
+dotplot(go_enrich)
+
+
 
 
 
@@ -188,7 +193,9 @@ if (all(grepl("^ENSG", sig_genes))) {
 # 检查转换后的基因 ID
 head(sig_genes)
 
-
+# KEGG 富集分析
+kegg_enrich <- enrichKEGG(gene = sig_genes, organism = "hsa", keyType = "kegg")
+dotplot(kegg_enrich)
 
 
 force = TRUE
